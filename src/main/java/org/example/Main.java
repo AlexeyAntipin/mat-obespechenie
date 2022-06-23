@@ -21,11 +21,22 @@ public class Main {
 	private static void simplex() {
 		System.out.println("Симплекс метод:");
 		Point startPoint = new Point(1, 1);
+		execute(startPoint);
+	}
+
+	private static void execute(Point startPoint) {
 		int i = 0;
 		List<Point> points = new ArrayList<>(List.of(startPoint, startPoint.createPoint1(), startPoint.createPoint2()));
 		do {
 			points.sort(Comparator.comparingDouble(Point::getF));
-			points.add(getAntiPoint(points.get(2), findCenter(points.get(0), points.get(1))));
+			Point antiPoint = getAntiPoint(points.get(2), findCenter(points.get(0), points.get(1)));
+			if (antiPoint.getF() > points.get(2).getF()) {
+				Point.redux();
+				Point min = points.get(0);
+				execute(new Point(min.getX1() + 0.5 * (min.getX1() - antiPoint.getX1()), min.getX2() + 0.5 * (min.getX2() - antiPoint.getX2())));
+				return;
+			}
+			points.add(antiPoint);
 			points.remove(2);
 			i++;
 		} while (!check(points));

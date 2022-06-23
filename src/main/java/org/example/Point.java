@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class Point {
 
-	public static final double M = 0.025d;
-
 	public static final double N = 2;
+
+	private static double M = 0.25d;
 
 	private final double x1;
 
@@ -60,9 +60,13 @@ public class Point {
 		return new double[][] { { 14d, 2d }, { 2d, 10d } };
 	}
 
+	public static void redux() {
+		M = M / 2d;
+	}
+
 	@Override
 	public String toString() {
-		return "(" + x1 + ", " + x2 + ")";
+		return "(" + x1 + ", " + x2 + "). F = " + f;
 	}
 
 }
